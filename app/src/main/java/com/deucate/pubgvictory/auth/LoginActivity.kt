@@ -1,7 +1,7 @@
 package com.deucate.pubgvictory.auth
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.deucate.pubgvictory.HomeActivity
 import com.deucate.pubgvictory.InitialClass
