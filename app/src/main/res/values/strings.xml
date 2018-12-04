@@ -5,4 +5,16 @@
     <string name="title_search">Search</string>
     <string name="title_account">Account</string>
     <string name="title_add">Add</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="followings">Followings</string>
+    <string name="additional_settings">Additional Settings</string>
+    <string name="logout">Logout</string>
+
+    <style name="warning_phone_number">No phone number found.</style>
+
+    <string name="phone_not_found">Phone number not found.</string>
 </resources>

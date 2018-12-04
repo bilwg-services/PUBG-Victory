@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.deucate.pubgvictory.HomeActivity
-import com.deucate.pubgvictory.InitialClass
+import com.deucate.pubgvictory.utils.Util
 import com.deucate.pubgvictory.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val signIn = 69
 
-    private val initialClass = InitialClass(this)
+    private val util = Util(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +53,9 @@ class LoginActivity : AppCompatActivity() {
                     val account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)
                     signInToFirebase(account!!)
                 } catch (e: ApiException) {
-                    initialClass.showAlertDialog("Error", e.localizedMessage)
+                    util.showAlertDialog("Error", e.localizedMessage)
                 } catch (e: NullPointerException) {
-                    initialClass.showAlertDialog("Error", e.localizedMessage)
+                    util.showAlertDialog("Error", e.localizedMessage)
                 }
             }
         }
@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         startHomeActivity()
                     } else {
-                        initialClass.showAlertDialog("Error", task.exception!!.localizedMessage)
+                        util.showAlertDialog("Error", task.exception!!.localizedMessage)
                     }
                 }
     }

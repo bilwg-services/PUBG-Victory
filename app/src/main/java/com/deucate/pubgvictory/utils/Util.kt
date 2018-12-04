@@ -1,11 +1,11 @@
-package com.deucate.pubgvictory
+package com.deucate.pubgvictory.utils
 
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.widget.Toast
 
-class InitialClass(val context: Context) {
+class Util(val context: Context) {
 
     var listner: OnCallBack? = null
 
