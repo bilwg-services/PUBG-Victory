@@ -4,10 +4,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_search">Search</string>
     <string name="title_account">Account</string>
-    <string name="title_add">Add</string>
+    <string name="title_room">Rooms</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="posts">Posts</string>
     <string name="followers">Followers</string>
     <string name="followings">Followings</string>
@@ -17,4 +15,7 @@
     <style name="warning_phone_number">No phone number found.</style>
 
     <string name="phone_not_found">Phone number not found.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
