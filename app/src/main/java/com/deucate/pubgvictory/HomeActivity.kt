@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.deucate.pubgvictory.account.AccountFragment
-import com.deucate.pubgvictory.room.RoomFragment
+import com.deucate.pubgvictory.room.RoomsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -39,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
             }
             R.id.navigation_room -> {
                 title.value = "Rooms"
-                fragment = RoomFragment()
+                fragment = RoomsFragment()
             }
             R.id.navigation_notifications -> {
                 title.value = "Notifications"

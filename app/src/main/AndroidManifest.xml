@@ -24,6 +24,8 @@
         <activity android:name=".add.AddActivity"/>
         <activity android:name=".room.RoomActivity">
         </activity>
+        <activity android:name=".room.RoomActivity">
+        </activity>
     </application>
 
 </manifest>

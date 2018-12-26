@@ -15,13 +15,12 @@ class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<Roo
 
     interface RoomCardClickListener {
         fun onClickCard(room: Room)
-        fun onClickShare(room: Room)
     }
 
     lateinit var listener: RoomCardClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
-        return RoomViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.room_card,parent,false))
+        return RoomViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.room_card, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -49,10 +48,6 @@ class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<Roo
             listener.onClickCard(room)
         }
 
-        holder.shareBTN.setOnClickListener {
-            listener.onClickShare(room)
-        }
-
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -62,12 +57,12 @@ class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<Roo
 
         val now = Calendar.getInstance()
 
-        return if (now.get(Calendar.DATE) == smsTime.get(Calendar.DATE)) {
-            "Today"
-        } else if (now.get(Calendar.DATE) + smsTime.get(Calendar.DATE) == 1) {
-            "Tomorrow"
-        } else {
-            SimpleDateFormat("dd/MM/yyyy").format(Date(smsTimeInMilis))
+        return when {
+            now.get(Calendar.DATE) == smsTime.get(Calendar.DATE) -> "Today"
+
+            now.get(Calendar.DATE) + smsTime.get(Calendar.DATE) == 1 -> "Tomorrow"
+
+            else -> SimpleDateFormat("dd/MM/yyyy").format(Date(smsTimeInMilis))
         }
 
     }
@@ -75,12 +70,11 @@ class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<Roo
 }
 
 class RoomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val titleTV = view.roomTitle!!
-    val timeTV = view.roomTime!!
-    val authorImage = view.roomAuthorImage!!
-    val gameImage = view.roomImage!!
-    val gameDescriptionTV = view.roomDescription!!
-    val priceTV = view.roomPrice!!
-    val shareBTN = view.roomShare!!
+    val titleTV = view.roomCardTitle!!
+    val timeTV = view.roomCardAuthorName!!
+    val authorImage = view.roomCardAuthorImage!!
+    val gameImage = view.roomCardImage!!
+    val gameDescriptionTV = view.roomCardDescription!!
+    val priceTV = view.roomCardPrice!!
     val mainCard = view.roomCardView!!
 }

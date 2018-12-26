@@ -13,7 +13,7 @@ import com.deucate.pubgvictory.utils.Util
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_room.view.*
 
-class RoomFragment : Fragment() {
+class RoomsFragment : Fragment() {
 
     private val rooms = ArrayList<Room>()
     private val roomAdapter = RoomAdapter(rooms)
@@ -31,7 +31,6 @@ class RoomFragment : Fragment() {
 
         roomAdapter.listener = object : RoomAdapter.RoomCardClickListener {
             override fun onClickCard(room: Room) {}
-            override fun onClickShare(room: Room) {}
         }
 
         roomDB.get().addOnCompleteListener {
