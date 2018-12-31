@@ -1,6 +1,7 @@
 package com.deucate.pubgvictory.room
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +31,11 @@ class RoomsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         roomAdapter.listener = object : RoomAdapter.RoomCardClickListener {
-            override fun onClickCard(room: Room) {}
+            override fun onClickCard(room: Room) {
+                val intent = Intent(activity,RoomActivity::class.java)
+                intent.putExtra(Constatns.rooms,room)
+                startActivity(intent)
+            }
         }
 
         roomDB.get().addOnCompleteListener {

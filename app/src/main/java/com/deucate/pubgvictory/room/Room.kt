@@ -1,5 +1,7 @@
 package com.deucate.pubgvictory.room
 
+import java.io.Serializable
+
 data class Room(
         val GameID: String = "",
         val Title: String = "Title",
@@ -9,6 +11,7 @@ data class Room(
         val Image: String = "",
         val Region: String = "Global",
         val AuthorImage: String = "",
+        val AuthorName: String = "",
         val Price: Long = 0L,
         val EntryFees: Long = 0L
-)
+):Serializable

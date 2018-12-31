@@ -107,7 +107,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/roomImage"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
@@ -145,7 +145,34 @@
                             android:textSize="18sp" />
 
                         <TextView
-                            android:id="@+id/accountPostCount"
+                            android:id="@+id/roomEntryFees"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="@color/secondary_text"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:singleLine="true"
+                            android:text="Type"
+                            android:textColor="@color/primary_text"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/roomTeam"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -172,7 +199,7 @@
                             android:textSize="18sp" />
 
                         <TextView
-                            android:id="@+id/accountFollowingsCount"
+                            android:id="@+id/roomPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

@@ -1,11 +1,15 @@
 package com.deucate.pubgvictory.utils
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.widget.Toast
+import java.text.SimpleDateFormat
+import java.util.*
 
-class Util(val context: Context) {
+
+class Util(val context: Context? = null) {
 
     var listner: OnCallBack? = null
 
@@ -23,6 +27,31 @@ class Util(val context: Context) {
         }.setNegativeButton("NO") { dialog, which ->
             listner!!.onAlertDialogNegativeAction(id, dialog, which)
         }.show()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getFormattedDate(smsTimeInMilis: Long): String {
+        val smsTime = Calendar.getInstance()
+        smsTime.timeInMillis = smsTimeInMilis
+
+        val now = Calendar.getInstance()
+
+        return when {
+            now.get(Calendar.DATE) == smsTime.get(Calendar.DATE) -> "Today"
+
+            now.get(Calendar.DATE) + smsTime.get(Calendar.DATE) == 1 -> "Tomorrow"
+
+            else -> SimpleDateFormat("dd/MM/yyyy").format(Date(smsTimeInMilis))
+        }
+    }
+
+    fun getTypeOfTeam(team: Int): String {
+        return when (team) {
+            1 -> "Solo"
+            2 -> "Duo"
+            4 -> "Squad"
+            else -> "Undefined"
+        }
     }
 
     interface OnCallBack {

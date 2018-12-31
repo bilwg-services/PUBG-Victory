@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.deucate.pubgvictory.R
 import kotlinx.android.synthetic.main.room_card.view.*
-import java.text.SimpleDateFormat
 import java.util.*
+import com.deucate.pubgvictory.utils.Util
 
 class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<RoomViewHolder>() {
 
@@ -42,27 +42,10 @@ class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<Roo
         holder.titleTV.text = room.Title
         holder.gameDescriptionTV.text = room.GameDescription
         holder.priceTV.text = "₹${room.Price}"
-        holder.timeTV.text = getFormattedDate(room.Time)
+        holder.timeTV.text = Util().getFormattedDate(room.Time)
 
         holder.mainCard.setOnClickListener {
             listener.onClickCard(room)
-        }
-
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun getFormattedDate(smsTimeInMilis: Long): String {
-        val smsTime = Calendar.getInstance()
-        smsTime.timeInMillis = smsTimeInMilis
-
-        val now = Calendar.getInstance()
-
-        return when {
-            now.get(Calendar.DATE) == smsTime.get(Calendar.DATE) -> "Today"
-
-            now.get(Calendar.DATE) + smsTime.get(Calendar.DATE) == 1 -> "Tomorrow"
-
-            else -> SimpleDateFormat("dd/MM/yyyy").format(Date(smsTimeInMilis))
         }
 
     }

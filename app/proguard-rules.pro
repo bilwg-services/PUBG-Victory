@@ -29,3 +29,7 @@
 
 # for DexGuard only
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+-keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
+   public *;
+}
