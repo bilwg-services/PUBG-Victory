@@ -23,4 +23,6 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="tournament_not_found">You have not participate any tournament yet.</string>
+    <string name="your_qr_text">Your QR text</string>
+    <string name="qr_code">QR Code</string>
 </resources>

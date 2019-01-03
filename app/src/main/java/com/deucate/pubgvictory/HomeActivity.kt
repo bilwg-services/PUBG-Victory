@@ -13,17 +13,11 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
-    private val title = MutableLiveData<String>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        setSupportActionBar(toolbar)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        title.observe(this, Observer {
-            toolbar.title = it
-        })
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -33,20 +27,15 @@ class HomeActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> {
                 fragment = HomeFragment()
-                title.value = "Home"
             }
             R.id.navigation_search -> {
-                title.value = "Search"
             }
             R.id.navigation_room -> {
-                title.value = "Match history"
                 fragment = MatchesFragment()
             }
             R.id.navigation_notifications -> {
-                title.value = "Notifications"
             }
             R.id.navigation_account -> {
-                title.value = "Profile"
                 fragment = AccountFragment()
             }
         }

@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
-    tools:context=".account.AccountFragment">
+    tools:context=".account.AccountFragment"
+    tools:layout_editor_absoluteY="25dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_height="0dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         app:cardCornerRadius="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,26 +37,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Kartik Patel"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView"
         tools:ignore="HardcodedText"
         tools:text="@string/app_name" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/accountName">
@@ -60,158 +58,105 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="@dimen/margin_16">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:singleLine="true"
-                    android:text="@string/posts"
-                    android:textColor="@color/primary_text"
-                    android:textSize="18sp" />
+                    android:baselineAligned="false"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    tools:ignore="UseCompoundDrawables">
 
-                <TextView
-                    android:id="@+id/accountPostCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/secondary_text"
-                    tools:ignore="HardcodedText" />
+                    <ImageView
+                        android:id="@+id/qrCode"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/qr_code" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/authUID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/your_qr_text"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
-            <LinearLayout
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:singleLine="true"
-                    android:text="@string/followers"
-                    android:textColor="@color/primary_text"
-                    android:textSize="18sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/accountFollowersCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/secondary_text"
-                    tools:ignore="HardcodedText" />
+                    <TextView
+                        android:id="@+id/accountEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_email_black_24dp"
+                        android:drawableLeft="@drawable/ic_email_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:singleLine="true"
+                        android:text="patelkartik1910@gmail.com"
+                        android:textSize="18sp"
+                        tools:ignore="HardcodedText,UnusedAttribute" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/accountPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_phone_black_24dp"
+                        android:drawableLeft="@drawable/ic_phone_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:singleLine="true"
+                        android:text="+91635212123"
+                        android:textSize="18sp"
+                        tools:ignore="HardcodedText,UnusedAttribute" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/accountAdditionalSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_settings_applications_black_24dp"
+                        android:drawableLeft="@drawable/ic_settings_applications_black_24dp"
+                        android:drawablePadding="16dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:singleLine="true"
+                        android:text="@string/additional_settings"
+                        android:textSize="18sp"
+                        tools:ignore="UnusedAttribute" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:singleLine="true"
-                    android:text="@string/followings"
-                    android:textColor="@color/primary_text"
-                    android:textSize="18sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/accountFollowingsCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/secondary_text"
-                    tools:ignore="HardcodedText" />
-
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView2"
-        app:layout_constraintStart_toStartOf="@+id/cardView2"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/accountEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableStart="@drawable/ic_email_black_24dp"
-                android:drawableLeft="@drawable/ic_email_black_24dp"
-                android:drawablePadding="16dp"
-                android:drawableTint="@color/colorPrimary"
-                android:gravity="center"
-                android:padding="16dp"
-                android:singleLine="true"
-                android:text="patelkartik1910@gmail.com"
-                android:textSize="18sp"
-                tools:ignore="HardcodedText,UnusedAttribute" />
-
-            <TextView
-                android:id="@+id/accountPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableStart="@drawable/ic_phone_black_24dp"
-                android:drawableLeft="@drawable/ic_phone_black_24dp"
-                android:drawablePadding="16dp"
-                android:drawableTint="@color/colorPrimary"
-                android:gravity="center"
-                android:padding="16dp"
-                android:singleLine="true"
-                android:text="+91635212123"
-                android:textSize="18sp"
-                tools:ignore="HardcodedText,UnusedAttribute" />
-
-            <TextView
-                android:id="@+id/accountAdditionalSettings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableStart="@drawable/ic_settings_applications_black_24dp"
-                android:drawableLeft="@drawable/ic_settings_applications_black_24dp"
-                android:drawablePadding="16dp"
-                android:drawableTint="@color/colorPrimary"
-                android:gravity="center"
-                android:padding="16dp"
-                android:singleLine="true"
-                android:text="@string/additional_settings"
-                android:textSize="18sp"
-                tools:ignore="UnusedAttribute" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
     <Button
         android:id="@+id/logoutButton"
@@ -228,5 +173,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:targetApi="lollipop" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

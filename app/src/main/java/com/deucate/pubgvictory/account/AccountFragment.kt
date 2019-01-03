@@ -13,6 +13,8 @@ import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.auth.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_account.view.*
+import net.glxn.qrgen.android.QRCode
+
 
 class AccountFragment : Fragment() {
 
@@ -20,6 +22,10 @@ class AccountFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_account, container, false)
+
+        val qrCode = QRCode.from(auth.uid!!).bitmap()
+        rootView.qrCode.setImageBitmap(qrCode)
+        rootView.authUID.text = auth.uid!!
 
         val currentUser = auth.currentUser
 

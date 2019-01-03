@@ -60,4 +60,9 @@ dependencies {
     //instamojo
     implementation 'ai.devsupport.instamojo:instamojolib:0.1.6'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'}
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+    //qrcode
+    implementation 'com.github.kenglxn.QRGen:android:2.5.0'
+
+}
