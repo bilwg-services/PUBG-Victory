@@ -1,4 +1,4 @@
-package com.deucate.pubgvictory.room
+package com.deucate.pubgvictory.home
 
 
 import android.content.Intent
@@ -12,9 +12,9 @@ import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.utils.Constatns
 import com.deucate.pubgvictory.utils.Util
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_room.view.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
-class RoomsFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     private val rooms = ArrayList<Room>()
     private val roomAdapter = RoomAdapter(rooms)
@@ -23,7 +23,7 @@ class RoomsFragment : Fragment() {
     private lateinit var util: Util
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_room, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_home, container, false)
         util = Util(activity!!)
 
         val recyclerView = rootView.roomRecyclerView
@@ -51,6 +51,5 @@ class RoomsFragment : Fragment() {
 
         return rootView
     }
-
 
 }

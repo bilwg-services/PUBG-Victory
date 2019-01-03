@@ -1,4 +1,4 @@
-package com.deucate.pubgvictory.room
+package com.deucate.pubgvictory.home
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -11,13 +11,24 @@ import kotlinx.android.synthetic.main.activity_room.*
 import org.json.JSONException
 import org.json.JSONObject
 import android.content.IntentFilter
+import android.text.SpannableStringBuilder
+import android.text.TextUtils
+import android.view.LayoutInflater
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
 import instamojo.library.InstapayListener
 import instamojo.library.InstamojoPay
+import kotlinx.android.synthetic.main.sheet_get_detail.view.*
 
 class RoomActivity : AppCompatActivity() {
 
     private lateinit var util: Util
 
+    private val users = ArrayList<User>()
+    private val auth = FirebaseAuth.getInstance()
+
+
+    @SuppressLint("InflateParams", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
@@ -27,7 +38,46 @@ class RoomActivity : AppCompatActivity() {
         initViews(room)
 
         roomParticipateButton.setOnClickListener {
-            callInstamojoPay("patelkartik1910@gmail.com","6352122123","200","test","kartik patel")
+            // callInstamojoPay("patelkartik1910@gmail.com","6352122123","200","test","kartik patel")
+
+            val view = LayoutInflater.from(this).inflate(R.layout.sheet_get_detail, null, false)
+
+            view.nextButton.setOnClickListener {
+                val name = view.detailNameET
+                val id = view.pubgIDET
+
+                if (TextUtils.isEmpty(name.text.toString())) {
+                    name.error = "Please enter name."
+                }
+                if (TextUtils.isEmpty(id.text.toString())) {
+                    id.error = "Please enter id."
+                }
+
+                users.add(User(name.text.toString(), id.text.toString()))
+
+                name.text = SpannableStringBuilder.valueOf("")
+                id.text = SpannableStringBuilder.valueOf("")
+
+                if (users.size == room.Teams) {
+                    if (room.EntryFees >= 10) {
+                        callInstamojoPay(
+                            "test@gmail.com",
+                            "6352122123",
+                            room.EntryFees.toString(),
+                            room.GameID,
+                            auth.uid!!
+                        )
+                    } else {
+                        onSuccess()
+                    }
+                } else {
+                    view.sheetDetailNumber.text = "User #${users.size + 1}"
+                }
+            }
+
+            val bottomDialog = BottomSheetDialog(this)
+            bottomDialog.setContentView(view)
+            bottomDialog.show()
         }
     }
 
@@ -68,13 +118,17 @@ class RoomActivity : AppCompatActivity() {
 
         instamojoPay.start(activity, pay, object : InstapayListener {
             override fun onSuccess(p0: String?) {
-                util.showAlertDialog("Error",p0!!)
+                onSuccess()
             }
 
             override fun onFailure(p0: Int, p1: String?) {
-                util.showAlertDialog("Error",p1!!)
+                util.showToastMessage(p1!!)
             }
         })
+    }
+
+    private fun onSuccess() {
+        util.showAlertDialog("Error", "Success")
     }
 
 }

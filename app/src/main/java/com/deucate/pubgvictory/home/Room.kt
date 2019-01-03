@@ -1,4 +1,4 @@
-package com.deucate.pubgvictory.room
+package com.deucate.pubgvictory.home
 
 import java.io.Serializable
 

@@ -1,4 +1,4 @@
-package com.deucate.pubgvictory.room
+package com.deucate.pubgvictory.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

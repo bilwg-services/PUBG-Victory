@@ -31,7 +31,7 @@
         <activity android:name=".HomeActivity"/>
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <activity android:name=".add.AddActivity"/>
-        <activity android:name=".room.RoomActivity"/>
+        <activity android:name=".home.RoomActivity"/>
         <meta-data android:name="instamojo.orderauth.url"
                    android:value="https://bilwg.com/pubgvictory/access_token.php"/>
     </application>

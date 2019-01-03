@@ -11,7 +11,6 @@ import java.util.*
 
 class Util(val context: Context? = null) {
 
-    var listner: OnCallBack? = null
 
     fun showAlertDialog(title: String, message: String) {
         AlertDialog.Builder(context).setTitle(title).setMessage(message).setPositiveButton("OK") { _, _ -> }.show()
@@ -19,14 +18,6 @@ class Util(val context: Context? = null) {
 
     fun showToastMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun showAlertDialogWithAction(title: String, message: String, id: Int) {
-        AlertDialog.Builder(context).setTitle(title).setMessage(message).setPositiveButton("OK") { dialog, which ->
-            listner!!.onAlertDialogPositiveAction(id, dialog, which)
-        }.setNegativeButton("NO") { dialog, which ->
-            listner!!.onAlertDialogNegativeAction(id, dialog, which)
-        }.show()
     }
 
     @SuppressLint("SimpleDateFormat")

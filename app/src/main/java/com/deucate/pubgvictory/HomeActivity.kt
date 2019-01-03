@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.deucate.pubgvictory.account.AccountFragment
-import com.deucate.pubgvictory.room.RoomsFragment
+import com.deucate.pubgvictory.home.HomeFragment
+import com.deucate.pubgvictory.matches.MatchesFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -38,8 +39,8 @@ class HomeActivity : AppCompatActivity() {
                 title.value = "Search"
             }
             R.id.navigation_room -> {
-                title.value = "Rooms"
-                fragment = RoomsFragment()
+                title.value = "Match history"
+                fragment = MatchesFragment()
             }
             R.id.navigation_notifications -> {
                 title.value = "Notifications"
