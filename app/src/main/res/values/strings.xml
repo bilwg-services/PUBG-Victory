@@ -25,4 +25,6 @@
     <string name="tournament_not_found">You have not participate any tournament yet.</string>
     <string name="your_qr_text">Your QR text</string>
     <string name="qr_code">QR Code</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email">Email Address</string>
 </resources>

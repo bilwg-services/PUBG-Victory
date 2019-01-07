@@ -12,6 +12,7 @@ android {
         versionCode 1
         useLibrary 'org.apache.http.legacy'
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -56,6 +57,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha01'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //instamojo
     implementation 'ai.devsupport.instamojo:instamojolib:0.1.6'
