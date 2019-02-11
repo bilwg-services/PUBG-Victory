@@ -25,7 +25,7 @@ import java.lang.NullPointerException
 
 class LoginActivity : AppCompatActivity() {
 
-    private val auth = FirebaseAuth.getInstance()
+    private var auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -75,7 +75,8 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        startHomeActivity()
+                        auth = FirebaseAuth.getInstance()
+                        checkExistingUser(auth.uid!!)
                     } else {
                         util.showAlertDialog("Error", task.exception!!.localizedMessage)
                     }
@@ -87,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
             if (it.isSuccessful) {
                 val result = it.result!!
                 if (result.exists()) {
-                    val user = result.toObject(User::class.java)
+                    startHomeActivity()
                 } else {
                     newUser(uid)
                 }
@@ -117,21 +118,21 @@ class LoginActivity : AppCompatActivity() {
             layout.newUserPhone.isEnabled = false
         }
 
-        AlertDialog.Builder(this).setView(layout).setPositiveButton("Next") { _, _ ->
+        AlertDialog.Builder(this).setView(layout).setTitle("Welcome!!!").setPositiveButton("Next") { _, _ ->
 
             val userName = layout.newUserName.text.toString()
             val phone = layout.newUserPhone.text.toString()
             val emailAddress = layout.newUserEmail.text.toString()
 
-            if (userName.isEmpty()){
+            if (userName.isEmpty()) {
                 layout.newUserName.error = "Please enter name."
                 return@setPositiveButton
             }
-            if (phone.isEmpty()){
+            if (phone.isEmpty()) {
                 layout.newUserPhone.error = "Please enter phone number."
                 return@setPositiveButton
             }
-            if (emailAddress.isEmpty()){
+            if (emailAddress.isEmpty()) {
                 layout.newUserEmail.error = "Please enter email address."
                 return@setPositiveButton
             }
@@ -143,10 +144,10 @@ class LoginActivity : AppCompatActivity() {
 
 
             db.collection(Constatns.users).document(uid).set(data).addOnCompleteListener {
-                if (it.isSuccessful){
+                if (it.isSuccessful) {
                     startHomeActivity()
-                }else{
-                    util.showAlertDialog("Error",it.exception!!.localizedMessage)
+                } else {
+                    util.showAlertDialog("Error", it.exception!!.localizedMessage)
                 }
             }
         }.show()

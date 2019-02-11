@@ -13,34 +13,44 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
+    private val currentFragment = MutableLiveData<Fragment>()
+    private var currentFragmentID = 8080
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        currentFragment.observe(this, Observer {
+            it.let { fragment ->
+                if (currentFragmentID != fragment.id) {
+                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, "").commit()
+                    currentFragmentID = fragment.id
+                }
+            }
+        })
+
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
-        var fragment: Fragment = HomeFragment()
-
         when (item.itemId) {
             R.id.navigation_home -> {
-                fragment = HomeFragment()
+                currentFragment.value = HomeFragment()
             }
             R.id.navigation_search -> {
+                currentFragment.value = SearchFragment()
             }
             R.id.navigation_room -> {
-                fragment = MatchesFragment()
+                currentFragment.value = MatchesFragment()
             }
             R.id.navigation_notifications -> {
+                currentFragment.value = NotificationFragment()
             }
             R.id.navigation_account -> {
-                fragment = AccountFragment()
+                currentFragment.value = AccountFragment()
             }
         }
-
-        supportFragmentManager.beginTransaction().replace(R.id.container, fragment, "").commit()
 
         return@OnNavigationItemSelectedListener true
     }
