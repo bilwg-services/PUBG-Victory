@@ -30,6 +30,8 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
+        navigation.selectedItemId = R.id.navigation_home
+
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

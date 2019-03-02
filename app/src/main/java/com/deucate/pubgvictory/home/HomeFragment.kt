@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.deucate.pubgvictory.R
+import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.utils.Constatns
 import com.deucate.pubgvictory.utils.Util
 import com.google.firebase.firestore.FirebaseFirestore

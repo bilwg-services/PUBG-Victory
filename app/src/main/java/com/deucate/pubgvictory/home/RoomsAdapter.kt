@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.deucate.pubgvictory.R
+import com.deucate.pubgvictory.model.Room
 import kotlinx.android.synthetic.main.room_card.view.*
 import java.util.*
 import com.deucate.pubgvictory.utils.Util

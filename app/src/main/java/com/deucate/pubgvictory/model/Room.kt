@@ -1,4 +1,4 @@
-package com.deucate.pubgvictory.home
+package com.deucate.pubgvictory.model
 
 import java.io.Serializable
 

@@ -10,7 +10,6 @@ import com.deucate.pubgvictory.HomeActivity
 import com.deucate.pubgvictory.utils.Util
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.utils.Constatns
-import com.deucate.pubgvictory.utils.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
