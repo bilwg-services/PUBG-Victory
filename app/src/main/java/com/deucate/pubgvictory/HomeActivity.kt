@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.deucate.pubgvictory.account.AccountFragment
 import com.deucate.pubgvictory.home.HomeFragment
 import com.deucate.pubgvictory.matches.MatchesFragment
+import com.deucate.pubgvictory.search.SearchFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {

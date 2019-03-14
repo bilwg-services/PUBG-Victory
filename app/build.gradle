@@ -7,7 +7,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.deucate.pubgvictory"
-        minSdkVersion 15
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         useLibrary 'org.apache.http.legacy'
@@ -66,5 +66,6 @@ dependencies {
 
     //qrcode
     implementation 'com.github.kenglxn.QRGen:android:2.5.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
 }

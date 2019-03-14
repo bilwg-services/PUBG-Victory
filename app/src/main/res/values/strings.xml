@@ -27,4 +27,6 @@
     <string name="qr_code">QR Code</string>
     <string name="phone_number">Phone Number</string>
     <string name="email">Email Address</string>
+    <string name="search_tournaments">Search tournaments.</string>
+    <string name="search">Search</string>
 </resources>
