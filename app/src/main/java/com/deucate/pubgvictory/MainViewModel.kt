@@ -45,7 +45,7 @@ class MainViewModel : ViewModel() {
     }
 
 
-    private fun searchRoom(name: String, callback: (ArrayList<Room>?) -> Unit) {
+    fun searchRoom(name: String, callback: (ArrayList<Room>?) -> Unit) {
         db.collection("Rooms").orderBy("Title").startAt(name).endAt(name + '\uf8ff').get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -53,9 +53,9 @@ class MainViewModel : ViewModel() {
                     for (doc in it.result!!.documents) {
                         searchResult.add(getRoomFromDocument(doc))
                     }
-                    callback.invoke(searchResult)
+                    callback(searchResult)
                 } else {
-                    callback.invoke(null)
+                    callback(null)
                 }
             }
     }
