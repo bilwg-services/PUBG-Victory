@@ -1,9 +1,9 @@
 package com.deucate.pubgvictory
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.deucate.pubgvictory.model.Room
+import com.deucate.pubgvictory.model.User
 import com.deucate.pubgvictory.utils.Constatns
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -22,8 +22,17 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    val user = MutableLiveData<User>()
+
     init {
         rooms.value = ArrayList()
+        user.value = User(
+            ID = auth.uid!!,
+            Name = auth.currentUser!!.displayName!!,
+            Phone = auth.currentUser!!.phoneNumber!!,
+            Email = auth.currentUser!!.email!!
+        )
+        loadUser()
     }
 
     private fun loadRooms() {
@@ -34,7 +43,6 @@ class MainViewModel : ViewModel() {
                         for (room in it.result!!.documents) {
                             rooms.add(getRoomFromDocument(room))
                         }
-                        Log.d("--->", rooms.value.toString())
                     } else {
                         error.value = "500 Internal server error."
                     }
@@ -44,6 +52,22 @@ class MainViewModel : ViewModel() {
             }
     }
 
+    private fun loadUser() {
+        db.collection(Constatns.users).document(auth.uid!!).get().addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result.let { user ->
+                    this.user.value = User(
+                        ID = user!!.id,
+                        Name = user.getString("Name")!!,
+                        Phone = user.getString("Phone")!!,
+                        Email = user.getString("Email")!!
+                    )
+                }
+            } else {
+                error.value = it.exception!!.localizedMessage
+            }
+        }
+    }
 
     fun searchRoom(name: String, callback: (ArrayList<Room>?) -> Unit) {
         db.collection("Rooms").orderBy("Title").startAt(name).endAt(name + '\uf8ff').get()

@@ -10,9 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.deucate.pubgvictory.MainViewModel
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.auth.LoginActivity
+import com.deucate.pubgvictory.model.User
 import com.deucate.pubgvictory.utils.Constatns
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,70 +25,48 @@ import net.glxn.qrgen.android.QRCode
 
 class AccountFragment : Fragment() {
 
-    private val auth = FirebaseAuth.getInstance()
+    lateinit var viewModel: MainViewModel
 
-    private val email = MutableLiveData<String>()
-    private val phone = MutableLiveData<String>()
+    private lateinit var user: User
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.fragment_account, container, false)
 
-        val qrCode = QRCode.from(auth.uid!!).bitmap()
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        this.user = viewModel.user.value!!
+        viewModel.user.observe(this, Observer {
+            this.user = it
+            updateUI(rootView)
+        })
+
+        val qrCode = QRCode.from(user.ID).bitmap()
         rootView.qrCode.setImageBitmap(qrCode)
-        rootView.authUID.text = auth.uid!!
-
-
-        email.observe(this, Observer {
-            rootView.accountEmail.text = it!!
-        })
-
-        phone.observe(this, Observer {
-            rootView.accountPhone.text = it!!
-        })
-
-        val currentUser = auth.currentUser
-
-        if (currentUser != null) {
-            email.value = currentUser.email
-            if (currentUser.phoneNumber == null || currentUser.phoneNumber == "") {
-                phone.value = getString(R.string.phone_not_found)
-            } else {
-                phone.value = currentUser.phoneNumber
-            }
-            rootView.accountName.text = currentUser.displayName
-            Glide.with(this).load(currentUser.photoUrl).into(rootView.accountProfilePicture)
-        } else {
-            startActivity(Intent(activity, LoginActivity::class.java))
-            activity!!.finish()
-        }
+        rootView.authUID.text = user.ID
 
         rootView.accountAdditionalSettings.setOnClickListener {
             Toast.makeText(activity!!, "Start additional activity", Toast.LENGTH_SHORT).show()
         }
 
         rootView.logoutButton.setOnClickListener {
-            auth.signOut()
+            FirebaseAuth.getInstance().signOut()
             startActivity(Intent(activity, LoginActivity::class.java))
             activity!!.finish()
         }
 
-        FirebaseFirestore.getInstance().collection(Constatns.users).document(currentUser!!.uid).get().addOnCompleteListener {
-            if (it.isSuccessful) {
-                val dbEmail = it.result!!.getString("Email")
-                val dbMobileNumber = it.result!!.getString("Phone")
-
-                if (!dbEmail.isNullOrEmpty()) {
-                    email.value = dbMobileNumber
-                }
-                if (!dbMobileNumber.isNullOrEmpty()) {
-                    email.value = dbEmail
-                }
-            } else {
-                Toast.makeText(activity!!, it.exception!!.localizedMessage, Toast.LENGTH_LONG).show()
-            }
-        }
-
         return rootView
+    }
+
+    private fun updateUI(rootView: View) {
+        rootView.accountName.text = user.Name
+        rootView.accountEmail.text = user.Email
+        rootView.accountPhone.text = user.Phone
+
+        Glide.with(this).load(FirebaseAuth.getInstance().currentUser!!.photoUrl)
+            .into(rootView.accountProfilePicture)
     }
 
 

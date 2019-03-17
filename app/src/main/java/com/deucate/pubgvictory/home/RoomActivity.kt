@@ -56,7 +56,14 @@ class RoomActivity : AppCompatActivity() {
                     id.error = "Please enter id."
                 }
 
-                users.add(User(name.text.toString(), id.text.toString()))
+                users.add(
+                    User(
+                        ID = id.text.toString(),
+                        Name = name.text.toString(),
+                        Phone = null,
+                        Email = null
+                    )
+                )
 
                 name.text = SpannableStringBuilder.valueOf("")
                 id.text = SpannableStringBuilder.valueOf("")
