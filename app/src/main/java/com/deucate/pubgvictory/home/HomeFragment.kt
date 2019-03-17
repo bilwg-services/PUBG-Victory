@@ -6,49 +6,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.deucate.pubgvictory.MainViewModel
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.utils.Constatns
-import com.deucate.pubgvictory.utils.Util
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
 
-    private val rooms = ArrayList<Room>()
-    private val roomAdapter = RoomAdapter(rooms)
+    private lateinit var viewModel: MainViewModel
+    private lateinit var adapter: RoomAdapter
 
-    private val roomDB = FirebaseFirestore.getInstance().collection(Constatns.rooms)
-    private lateinit var util: Util
+    private var rooms = ArrayList<Room>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.fragment_home, container, false)
-        util = Util(activity!!)
 
-        val recyclerView = rootView.roomRecyclerView
-        recyclerView.adapter = roomAdapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        roomAdapter.listener = object : RoomAdapter.RoomCardClickListener {
+        viewModel.rooms.observe(this, Observer { rooms ->
+            this.rooms = rooms
+            adapter.notifyDataSetChanged()
+        })
+
+        adapter = RoomAdapter(viewModel.rooms.value)
+        rootView.roomRecyclerView.adapter = adapter
+        rootView.roomRecyclerView.layoutManager = LinearLayoutManager(activity)
+
+        adapter.listener = object : RoomAdapter.RoomCardClickListener {
             override fun onClickCard(room: Room) {
-                val intent = Intent(activity,RoomActivity::class.java)
-                intent.putExtra(Constatns.rooms,room)
+                val intent = Intent(activity, RoomActivity::class.java)
+                intent.putExtra(Constatns.rooms, room)
                 startActivity(intent)
             }
         }
 
-        roomDB.get().addOnCompleteListener {
-            if (it.isSuccessful) {
-                for (doc in it.result!!.documents) {
-                    rooms.add(doc.toObject(Room::class.java)!!)
-                }
-                roomAdapter.notifyDataSetChanged()
-            } else {
-                util.showAlertDialog("Error", it.exception!!.localizedMessage)
-            }
-        }
 
         return rootView
     }

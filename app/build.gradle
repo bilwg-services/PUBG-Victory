@@ -42,7 +42,7 @@ dependencies {
 
     //firebase
     implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.0'
     implementation 'com.google.firebase:firebase-storage:16.1.0'
     implementation 'com.google.firebase:firebase-firestore:18.1.0'
 
@@ -55,9 +55,14 @@ dependencies {
     //glide-others
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha03'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.android.support:multidex:1.0.3'
+
+    //navigation
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0'
 
     //instamojo
     implementation 'ai.devsupport.instamojo:instamojolib:0.1.6'
@@ -67,5 +72,6 @@ dependencies {
     //qrcode
     implementation 'com.github.kenglxn.QRGen:android:2.5.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
 
 }

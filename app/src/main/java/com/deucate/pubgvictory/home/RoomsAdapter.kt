@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.room_card.view.*
 import java.util.*
 import com.deucate.pubgvictory.utils.Util
 
-class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<RoomViewHolder>() {
+class RoomAdapter(private val rooms: ArrayList<Room>?) : RecyclerView.Adapter<RoomViewHolder>() {
 
     interface RoomCardClickListener {
         fun onClickCard(room: Room)
@@ -21,19 +21,28 @@ class RoomAdapter(private val rooms: ArrayList<Room>) : RecyclerView.Adapter<Roo
     lateinit var listener: RoomCardClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
-        return RoomViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.room_card, parent, false))
+        return RoomViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.room_card,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
-        return rooms.size
+        return (rooms?.size) ?: 0
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RoomViewHolder, position: Int) {
+        if (rooms == null) {
+            return
+        }
         val room = rooms[position]
 
         //loading image into views
-        if (!room.AuthorImage.isEmpty()) {
+        if (room.AuthorImage != null) {
             Glide.with(holder.itemView).load(room.AuthorImage).into(holder.authorImage)
         }
         if (!room.Image.isEmpty()) {

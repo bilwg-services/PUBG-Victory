@@ -43,6 +43,7 @@ class RoomActivity : AppCompatActivity() {
             // callInstamojoPay("patelkartik1910@gmail.com","6352122123","200","test","kartik patel")
 
             val view = LayoutInflater.from(this).inflate(R.layout.sheet_get_detail, null, false)
+            val bottomDialog = BottomSheetDialog(this)
 
             view.nextButton.setOnClickListener {
                 val name = view.detailNameET
@@ -61,13 +62,14 @@ class RoomActivity : AppCompatActivity() {
                 id.text = SpannableStringBuilder.valueOf("")
 
                 if (users.size == room.Teams) {
+                    bottomDialog.dismiss()
                     if (room.EntryFees >= 10) {
                         callInstamojoPay(
-                            "test@gmail.com",
-                            "6352122123",
-                            room.EntryFees.toString(),
-                            room.GameID,
-                            auth.uid!!
+                            email = "test@gmail.com",
+                            phone = "6352122123",
+                            amount = room.EntryFees.toString(),
+                            purpose = room.GameID,
+                            buyerName = auth.uid!!
                         )
                     } else {
                         onSuccess()
@@ -77,7 +79,6 @@ class RoomActivity : AppCompatActivity() {
                 }
             }
 
-            val bottomDialog = BottomSheetDialog(this)
             bottomDialog.setContentView(view)
             bottomDialog.show()
         }
@@ -85,7 +86,7 @@ class RoomActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initViews(room: Room) {
-        if (!room.AuthorImage.isEmpty()) {
+        if (room.AuthorImage != null) {
             Glide.with(this).load(room.AuthorImage).into(roomAuthorImage)
         }
         if (!room.Image.isEmpty()) {
@@ -100,7 +101,13 @@ class RoomActivity : AppCompatActivity() {
         roomAuthorName.text = "By ${room.AuthorName} at "
     }
 
-    private fun callInstamojoPay(email: String, phone: String, amount: String, purpose: String, buyername: String) {
+    private fun callInstamojoPay(
+        email: String,
+        phone: String,
+        amount: String,
+        purpose: String,
+        buyerName: String
+    ) {
         val activity = this
         val instamojoPay = InstamojoPay()
         val filter = IntentFilter("ai.devsupport.instamojo")
@@ -111,7 +118,7 @@ class RoomActivity : AppCompatActivity() {
             pay.put("phone", phone)
             pay.put("purpose", purpose)
             pay.put("amount", amount)
-            pay.put("name", buyername)
+            pay.put("name", buyerName)
             pay.put("send_sms", false)
             pay.put("send_email", false)
         } catch (e: JSONException) {
@@ -120,6 +127,7 @@ class RoomActivity : AppCompatActivity() {
 
         instamojoPay.start(activity, pay, object : InstapayListener {
             override fun onSuccess(p0: String?) {
+                util.showToastMessage(p0.toString())
                 onSuccess()
             }
 

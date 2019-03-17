@@ -3,15 +3,16 @@ package com.deucate.pubgvictory.model
 import java.io.Serializable
 
 data class Room(
-        val GameID: String = "",
-        val Title: String = "Title",
-        val GameDescription: String = "Not Found",
-        val Teams: Int = 1,
-        val Time: Long = System.currentTimeMillis(),
-        val Image: String = "",
-        val Region: String = "Global",
-        val AuthorImage: String = "",
-        val AuthorName: String = "",
-        val Price: Long = 0L,
-        val EntryFees: Long = 0L
-):Serializable
+    val GameID: String,
+    val Title: String,
+    val GameDescription: String,
+    val Teams: Int,
+    val Time: Long,
+    val Image: String,
+    val Map: Int,
+    val AuthorName: String,
+    val AuthorID:String,
+    val AuthorImage:String?,
+    val Price: Long,
+    val EntryFees: Long
+) : Serializable
