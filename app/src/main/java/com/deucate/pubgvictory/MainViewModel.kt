@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.utils.Constatns
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainViewModel : ViewModel() {
@@ -31,22 +32,7 @@ class MainViewModel : ViewModel() {
                 if (it.exception == null) {
                     if (it.result != null || !it.result!!.isEmpty) {
                         for (room in it.result!!.documents) {
-                            rooms.add(
-                                Room(
-                                    GameID = room.id,
-                                    Title = room.getString("Title")!!,
-                                    GameDescription = room.getString("GameDescription")!!,
-                                    Teams = room.getLong("Teams")!!.toInt(),
-                                    Time = room.getLong("Time")!!,
-                                    Image = room.getString("Image")!!,
-                                    Map = room.getLong("Map")!!.toInt(),
-                                    AuthorName = room.getString("AuthorName")!!,
-                                    AuthorID = room.getString("AuthorID")!!,
-                                    Price = room.getLong("Price")!!,
-                                    EntryFees = room.getLong("EntryFees")!!,
-                                    AuthorImage = room.getString("AuthorImage")
-                                )
-                            )
+                            rooms.add(getRoomFromDocument(room))
                         }
                         Log.d("--->", rooms.value.toString())
                     } else {
@@ -56,6 +42,39 @@ class MainViewModel : ViewModel() {
                     error.value = it.exception!!.localizedMessage
                 }
             }
+    }
+
+
+    private fun searchRoom(name: String, callback: (ArrayList<Room>?) -> Unit) {
+        db.collection("Rooms").orderBy("Title").startAt(name).endAt(name + '\uf8ff').get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val searchResult = ArrayList<Room>()
+                    for (doc in it.result!!.documents) {
+                        searchResult.add(getRoomFromDocument(doc))
+                    }
+                    callback.invoke(searchResult)
+                } else {
+                    callback.invoke(null)
+                }
+            }
+    }
+
+    private fun getRoomFromDocument(document: DocumentSnapshot): Room {
+        return Room(
+            GameID = document.id,
+            Title = document.getString("Title")!!,
+            GameDescription = document.getString("GameDescription")!!,
+            Teams = document.getLong("Teams")!!.toInt(),
+            Time = document.getLong("Time")!!,
+            Image = document.getString("Image")!!,
+            Map = document.getLong("Map")!!.toInt(),
+            AuthorName = document.getString("AuthorName")!!,
+            AuthorID = document.getString("AuthorID")!!,
+            Price = document.getLong("Price")!!,
+            EntryFees = document.getLong("EntryFees")!!,
+            AuthorImage = document.getString("AuthorImage")
+        )
     }
 
     fun <T> MutableLiveData<ArrayList<T>>.add(item: T) {

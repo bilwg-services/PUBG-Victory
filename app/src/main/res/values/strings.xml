@@ -29,4 +29,5 @@
     <string name="email">Email Address</string>
     <string name="search_tournaments">Search tournaments.</string>
     <string name="search">Search</string>
+    <string name="search_room">Search Rooms</string>
 </resources>

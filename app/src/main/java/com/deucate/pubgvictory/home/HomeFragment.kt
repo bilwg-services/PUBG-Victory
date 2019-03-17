@@ -3,10 +3,12 @@ package com.deucate.pubgvictory.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,7 +17,6 @@ import com.deucate.pubgvictory.MainViewModel
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.utils.Constatns
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
@@ -23,7 +24,6 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: RoomAdapter
 
-    private var rooms = ArrayList<Room>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,10 +34,24 @@ class HomeFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        viewModel.rooms.observe(this, Observer { rooms ->
-            this.rooms = rooms
+        viewModel.rooms.observe(this, Observer {
             adapter.notifyDataSetChanged()
         })
+
+        val searchEditText = rootView.searchEditText
+        searchEditText.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (searchEditText.right - searchEditText.compoundDrawables[Constatns.DRAWABLE_RIGHT].bounds.width())) {
+                    searchEditText.text = SpannableStringBuilder("")
+                    return@setOnTouchListener true
+                }
+                if (event.rawX <= (searchEditText.right - searchEditText.compoundDrawables[Constatns.DRAWABLE_LEFT].bounds.width())) {
+                    Toast.makeText(context, "Search", Toast.LENGTH_SHORT).show()
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
+        }
 
         adapter = RoomAdapter(viewModel.rooms.value)
         rootView.roomRecyclerView.adapter = adapter
