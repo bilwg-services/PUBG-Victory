@@ -1,42 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".home.HomeFragment">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".home.HomeFragment"
+  tools:ignore="AutoFill">
 
-    <androidx.cardview.widget.CardView
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="8dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <EditText
+        android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="16dp"
+        android:background="@null"
+        android:drawableEnd="@drawable/ic_close_black_24dp"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/ic_search_black_24dp"
+        android:drawableTint="#99000000"
+        android:hint="@string/search_room"
+        android:inputType="text"/>
 
-        <EditText
-            android:id="@+id/searchEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableStart="@drawable/ic_search_black_24dp"
-            android:drawableEnd="@drawable/ic_close_black_24dp"
-            android:drawablePadding="8dp"
-            android:drawableTint="#99000000"
-            android:hint="@string/search_room"
-            android:inputType="text"
-            android:padding="16dp" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/roomRecyclerView"
+      <LinearLayout
+        android:id="@+id/homeSearchExtendedLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingTop="100dp"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/colorPrimary"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/homeSearchExtendedRecyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+  </androidx.cardview.widget.CardView>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/roomRecyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="100dp"
+    android:clipToPadding="false"
+    android:scrollbars="vertical"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

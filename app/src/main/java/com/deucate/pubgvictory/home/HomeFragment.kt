@@ -12,11 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.deucate.pubgvictory.MainViewModel
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.model.Room
@@ -27,8 +25,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
-    private val currentAdapter = MutableLiveData<RecyclerView.Adapter<*>>()
-    private lateinit var roomAdapter: RoomAdapter
+    private val searchData = ArrayList<Room>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +35,9 @@ class HomeFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         rootView.roomRecyclerView.layoutManager = LinearLayoutManager(activity)
+        rootView.homeSearchExtendedRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        roomAdapter = RoomAdapter(viewModel.rooms.value)
+        val roomAdapter = RoomAdapter(viewModel.rooms.value)
         roomAdapter.listener = object : RoomAdapter.RoomCardClickListener {
             override fun onClickCard(room: Room) {
                 val intent = Intent(activity, RoomActivity::class.java)
@@ -47,25 +45,21 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
+        val searchAdapter = SearchAdapter(searchData)
+
+        rootView.roomRecyclerView.adapter = roomAdapter
+        rootView.homeSearchExtendedRecyclerView.adapter = searchAdapter
 
         viewModel.rooms.observe(this, Observer {
-            if (currentAdapter.value != null) {
-                currentAdapter.value!!.notifyDataSetChanged()
-            }
-        })
+            roomAdapter.notifyDataSetChanged()
 
-        currentAdapter.observe(this, Observer {
-            rootView.roomRecyclerView.adapter = it
         })
-
-        currentAdapter.value = roomAdapter
 
         val searchEditText = rootView.searchEditText
         searchEditText.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= (searchEditText.right - searchEditText.compoundDrawables[Constatns.DRAWABLE_RIGHT].bounds.width())) {
                     searchEditText.text = SpannableStringBuilder("")
-                    currentAdapter.value = roomAdapter
                     return@setOnTouchListener true
                 }
             }
@@ -74,12 +68,24 @@ class HomeFragment : Fragment() {
 
         searchEditText.onChange {
             if (it.length >= 3) {
-                viewModel.searchRoom(it) { rooms ->
-                    val searchAdapter = RoomAdapter(rooms)
-                    currentAdapter.value = searchAdapter
+                if (rootView.homeSearchExtendedLayout.visibility == View.GONE) {
+                    rootView.homeSearchExtendedLayout.visibility = View.VISIBLE
                 }
-            } else if (it.isEmpty()) {
-                currentAdapter.value = roomAdapter
+                viewModel.searchRoom(it) { rooms ->
+                    if (rooms != null) {
+                        rooms.forEach { room ->
+                            if (!searchData.contains(room)) {
+                                searchData.add(room)
+                            }
+                        }
+                        searchAdapter.notifyDataSetChanged()
+                    }
+                }
+            } else {
+                searchData.clear()
+                if (rootView.homeSearchExtendedLayout.visibility == View.VISIBLE) {
+                    rootView.homeSearchExtendedLayout.visibility = View.GONE
+                }
             }
         }
 
