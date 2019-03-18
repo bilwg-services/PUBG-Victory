@@ -35,7 +35,6 @@
         android:id="@+id/roomRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
         android:clipToPadding="false"
         android:paddingTop="100dp"
         android:scrollbars="vertical" />

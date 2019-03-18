@@ -60,6 +60,4 @@ class AccountFragment : Fragment() {
         Glide.with(this).load(FirebaseAuth.getInstance().currentUser!!.photoUrl)
                 .into(rootView.accountProfilePicture)
     }
-
-
 }

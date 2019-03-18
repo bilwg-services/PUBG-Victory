@@ -2,6 +2,7 @@ package com.deucate.pubgvictory
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.deucate.pubgvictory.model.Event
 import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.model.User
 import com.deucate.pubgvictory.utils.Constatns
@@ -16,23 +17,23 @@ class MainViewModel : ViewModel() {
 
     val error = MutableLiveData<String>()
 
-    val rooms: MutableLiveData<ArrayList<Room>> by lazy {
-        MutableLiveData<ArrayList<Room>>().also {
-            loadRooms()
-        }
-    }
-
+    val rooms = MutableLiveData<ArrayList<Room>>()
     val user = MutableLiveData<User>()
+    val myEvents = MutableLiveData<ArrayList<Event>>()
 
     init {
         rooms.value = ArrayList()
+        myEvents.value = ArrayList()
         user.value = User(
             ID = auth.uid!!,
             Name = auth.currentUser!!.displayName!!,
             Phone = auth.currentUser!!.phoneNumber!!,
             Email = auth.currentUser!!.email!!
         )
+
         loadUser()
+        loadRooms()
+        loadMyEvents()
     }
 
     private fun loadRooms() {
@@ -69,6 +70,31 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    private fun loadMyEvents() {
+        db.collection(Constatns.users).document(auth.currentUser!!.uid).collection("Matches").get()
+            .addOnCompleteListener {
+                if (it.exception == null) {
+                    if (it.result != null || !it.result!!.isEmpty) {
+                        for (myEvent in it.result!!.documents) {
+                            myEvents.add(getEventFromDocument(myEvent))
+                        }
+                    } else {
+                        error.value = "500 Internal server error."
+                    }
+                } else {
+                    error.value = it.exception!!.localizedMessage
+                }
+            }
+    }
+
+    private fun getEventFromDocument(event: DocumentSnapshot): Event {
+        return Event(
+            id = event.id,
+            position = event.getLong("Position").toString(),
+            Ref = event.getDocumentReference("Ref")!!
+        )
+    }
+
     fun searchRoom(name: String, callback: (ArrayList<Room>?) -> Unit) {
         db.collection("Rooms").orderBy("Title").startAt(name).endAt(name + '\uf8ff').get()
             .addOnCompleteListener {
@@ -101,7 +127,7 @@ class MainViewModel : ViewModel() {
         )
     }
 
-    fun <T> MutableLiveData<ArrayList<T>>.add(item: T) {
+    private fun <T> MutableLiveData<ArrayList<T>>.add(item: T) {
         val updatedItems = this.value as ArrayList
         updatedItems.add(item)
         this.value = updatedItems
