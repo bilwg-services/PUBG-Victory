@@ -9,15 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.deucate.pubgvictory.MainViewModel
 import com.deucate.pubgvictory.R
-import com.deucate.pubgvictory.model.Event
+import kotlinx.android.synthetic.main.fragment_matches.view.*
 
 class MatchesFragment : Fragment() {
-
     private lateinit var viewModel: MainViewModel
-
-    private var events = ArrayList<Event>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,14 +23,21 @@ class MatchesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_matches, container, false)
+        rootView.matchRecyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         viewModel.myEvents.observe(this, Observer {
-            events = it
+            rootView.matchRecyclerView.adapter = MatchAdapter(it)
+            if (it.isEmpty()) {
+                rootView.matchErrorTV.visibility = View.VISIBLE
+            } else {
+                rootView.matchErrorTV.visibility = View.GONE
+            }
         })
 
         return rootView
     }
+
 
 }

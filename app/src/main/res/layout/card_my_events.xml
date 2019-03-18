@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  app:cardCornerRadius="8dp"
+  android:layout_marginBottom="8dp"
+  android:layout_marginStart="@dimen/margin_16"
+  android:layout_marginEnd="@dimen/margin_16"
+  android:orientation="vertical"
+  app:cardElevation="4dp"
+  tools:ignore="HardcodedText">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_16">
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/cardEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chicken dinner at 20"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@color/primary_text"
+        tools:ignore="HardcodedText"/>
+
+      <TextView
+        android:id="@+id/cardEventTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="02/04/2019 12:05 AM"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:textColor="@color/secondary_text"
+        tools:ignore="HardcodedText"/>
+
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/cardEventPrice"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="5000$"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+      android:textColor="@color/secondary_text"/>
+
+  </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

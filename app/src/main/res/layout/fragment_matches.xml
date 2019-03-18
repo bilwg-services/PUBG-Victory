@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".matches.MatchesFragment">
+
+  <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".matches.MatchesFragment">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.recyclerview.widget.RecyclerView
+      android:paddingTop="8dp"
+      android:clipToPadding="false"
+      android:id="@+id/matchRecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:listitem="@layout/card_my_events"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/matchRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <TextView
+      android:id="@+id/matchErrorTV"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:text="@string/tournament_not_found"/>
 
-        <TextView
-            android:id="@+id/matchErrorTV"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/tournament_not_found" />
-
-    </RelativeLayout>
+  </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -90,8 +90,10 @@ class MainViewModel : ViewModel() {
     private fun getEventFromDocument(event: DocumentSnapshot): Event {
         return Event(
             id = event.id,
-            position = event.getLong("Position").toString(),
-            Ref = event.getDocumentReference("Ref")!!
+            Ref = event.getDocumentReference("Ref")!!,
+            Time = event.getTimestamp("Time")!!,
+            Title = event.getString("Title") ?: "No title Found",
+            Price = event.getLong("Price") ?: 0
         )
     }
 
