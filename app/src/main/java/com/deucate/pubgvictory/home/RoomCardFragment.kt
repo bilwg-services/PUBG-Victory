@@ -11,18 +11,27 @@ import com.bumptech.glide.Glide
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.utils.Util
-import kotlinx.android.synthetic.main.activity_room.view.*
 import kotlinx.android.synthetic.main.fragment_card_room.view.*
 
 class RoomCardFragment : Fragment() {
 
-    private lateinit var room: Room
 
     @SuppressLint("SetTextI18n")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.fragment_card_room, container, false)
-        room = arguments?.getSerializable("room") as Room
 
+        val room = arguments?.getSerializable("room") as Room?
+        if (room != null) {
+            initView(rootView, room)
+        }
+        return rootView
+    }
+
+    private fun initView(rootView: View, room: Room) {
         //loading image into views
         if (room.AuthorImage != null) {
             Glide.with(this).load(room.AuthorImage).into(rootView.roomCardAuthorImage)
@@ -40,7 +49,5 @@ class RoomCardFragment : Fragment() {
         rootView.roomParticipateButton.setOnClickListener {
             Toast.makeText(context, room.Title, Toast.LENGTH_LONG).show()
         }
-
-        return rootView
     }
 }

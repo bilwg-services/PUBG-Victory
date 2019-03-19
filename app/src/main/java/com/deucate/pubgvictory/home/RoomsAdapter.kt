@@ -12,7 +12,7 @@ class HomeViewPagerAdapter(private val rooms: ArrayList<Room>?, fragmentManager:
     override fun getItem(position: Int): Fragment {
         return RoomCardFragment().also {
             it.arguments = Bundle().also { bundle ->
-                bundle.putSerializable("room", rooms!![position])
+                bundle.putSerializable("room", rooms!![position] )
             }
         }
     }

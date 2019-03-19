@@ -1,35 +1,36 @@
 <resources>
-    <string name="app_name">PUBG Victory</string>
-    <string name="title_home">Home</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_search">Search</string>
-    <string name="title_account">Account</string>
-    <string name="title_room">Rooms</string>
+  <string name="app_name">PUBG Victory</string>
+  <string name="title_home">Home</string>
+  <string name="title_notifications">Notifications</string>
+  <string name="title_search">Search</string>
+  <string name="title_account">Account</string>
+  <string name="title_room">Rooms</string>
 
-    <string name="posts">Posts</string>
-    <string name="followers">Followers</string>
-    <string name="followings">Followings</string>
-    <string name="additional_settings">Additional Settings</string>
-    <string name="logout">Logout</string>
+  <string name="posts">Posts</string>
+  <string name="followers">Followers</string>
+  <string name="followings">Followings</string>
+  <string name="additional_settings">Additional Settings</string>
+  <string name="logout">Logout</string>
 
-    <style name="warning_phone_number">No phone number found.</style>
+  <style name="warning_phone_number">No phone number found.</style>
 
-    <string name="phone_not_found">Phone number not found.</string>
+  <string name="phone_not_found">Phone number not found.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name">Name</string>
-    <string name="pubg_game_id">PUBG Game id</string>
-    <string name="previous">Previous</string>
-    <string name="next">Next</string>
-    <string name="tournament_not_found">You have not participate any tournament yet.</string>
-    <string name="your_qr_text">Your QR text</string>
-    <string name="qr_code">QR Code</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="email">Email Address</string>
-    <string name="search_tournaments">Search tournaments.</string>
-    <string name="search">Search</string>
-    <string name="search_room">Search Rooms</string>
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="name">Name</string>
+  <string name="pubg_game_id">PUBG Game id</string>
+  <string name="previous">Previous</string>
+  <string name="next">Next</string>
+  <string name="tournament_not_found">You have not participate any tournament yet.</string>
+  <string name="your_qr_text">Your QR text</string>
+  <string name="qr_code">QR Code</string>
+  <string name="phone_number">Phone Number</string>
+  <string name="email">Email Address</string>
+  <string name="search_tournaments">Search tournaments.</string>
+  <string name="search">Search</string>
+  <string name="search_room">Search Rooms</string>
   <string name="no_notification_found">No notification found.</string>
   <string name="my_match">My Match</string>
+  <string name="title_activity_participate">ParticipateActivity</string>
 </resources>
