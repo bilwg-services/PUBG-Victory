@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.model.Room
@@ -47,7 +48,10 @@ class RoomCardFragment : Fragment() {
         rootView.roomCardEntryFees.text = "₹${room.EntryFees}"
 
         rootView.roomParticipateButton.setOnClickListener {
-            Toast.makeText(context, room.Title, Toast.LENGTH_LONG).show()
+            it.findNavController()
+                .navigate(R.id.action_homeFragment_to_participateActivity, Bundle().also { bundle ->
+                    bundle.putSerializable("room", room)
+                })
         }
     }
 }

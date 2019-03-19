@@ -3,7 +3,11 @@ package com.deucate.pubgvictory
 import android.os.Bundle
 import android.app.Activity
 import android.content.IntentFilter
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
+import com.deucate.pubgvictory.model.Room
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import instamojo.library.InstamojoPay
 import instamojo.library.InstapayListener
 
@@ -16,11 +20,26 @@ class ParticipateActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_participate)
 
+        val room = intent.getSerializableExtra("room") as Room?
+        if (room != null) {
+            Toast.makeText(this, room.toString(), Toast.LENGTH_SHORT).show()
+        } else {
+            FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener { data ->
+                if (data != null) {
+                    Log.d("----->",data.toString())
+                    val deepLink = data.link.getQueryParameter("id")
+                    Log.d("----->", deepLink)
+                    Toast.makeText(this, data.link.toString(), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
-    private fun onSuccess() {
-
-    }
+    private fun onSuccess() {}
 
     private fun callInstamojoPay(
         email: String,
