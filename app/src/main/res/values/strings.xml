@@ -31,4 +31,5 @@
     <string name="search">Search</string>
     <string name="search_room">Search Rooms</string>
   <string name="no_notification_found">No notification found.</string>
+  <string name="my_match">My Match</string>
 </resources>

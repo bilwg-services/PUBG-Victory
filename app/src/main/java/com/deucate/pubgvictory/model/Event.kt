@@ -5,7 +5,8 @@ import com.google.firebase.firestore.DocumentReference
 
 data class Event(
     val id: String,
-    val Ref: DocumentReference,
+    val TeamRef: DocumentReference,
+    val RoomRef: DocumentReference,
     val Time: Timestamp,
     val Title: String,
     val Price: Long

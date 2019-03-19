@@ -10,7 +10,11 @@ import com.deucate.pubgvictory.model.Event
 import kotlinx.android.synthetic.main.card_my_events.view.*
 import java.text.SimpleDateFormat
 
-class MatchAdapter(private val events: ArrayList<Event>) : RecyclerView.Adapter<MatchViewHolder>() {
+class MatchAdapter(
+    private val events: ArrayList<Event>,
+    private val listener: (position: Int, event: Event) -> Unit
+) :
+    RecyclerView.Adapter<MatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder =
         MatchViewHolder(
@@ -29,8 +33,11 @@ class MatchAdapter(private val events: ArrayList<Event>) : RecyclerView.Adapter<
         holder.priceTV.text = "₹ ${event.Price}"
         holder.titleTV.text = event.Title
         holder.timeTv.text = SimpleDateFormat("dd/MM/yyyy hh:mm aa").format(event.Time.toDate())
-    }
 
+        holder.itemView.setOnClickListener {
+            listener(position, event)
+        }
+    }
 }
 
 

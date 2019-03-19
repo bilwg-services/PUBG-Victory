@@ -90,10 +90,11 @@ class MainViewModel : ViewModel() {
     private fun getEventFromDocument(event: DocumentSnapshot): Event {
         return Event(
             id = event.id,
-            Ref = event.getDocumentReference("Ref")!!,
+            RoomRef = event.getDocumentReference("RoomRef")!!,
             Time = event.getTimestamp("Time")!!,
             Title = event.getString("Title") ?: "No title Found",
-            Price = event.getLong("Price") ?: 0
+            Price = event.getLong("Price") ?: 0,
+            TeamRef = event.getDocumentReference("TeamRef")!!
         )
     }
 
@@ -112,7 +113,7 @@ class MainViewModel : ViewModel() {
             }
     }
 
-    private fun getRoomFromDocument(document: DocumentSnapshot): Room {
+    fun getRoomFromDocument(document: DocumentSnapshot): Room {
         return Room(
             GameID = document.id,
             Title = document.getString("Title")!!,
@@ -125,7 +126,8 @@ class MainViewModel : ViewModel() {
             AuthorID = document.getString("AuthorID")!!,
             Price = document.getLong("Price")!!,
             EntryFees = document.getLong("EntryFees")!!,
-            AuthorImage = document.getString("AuthorImage")
+            AuthorImage = document.getString("AuthorImage"),
+            RoomID = document.getString("RoomID")
         )
     }
 

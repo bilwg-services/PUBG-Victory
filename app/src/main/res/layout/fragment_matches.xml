@@ -9,12 +9,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_16"
+      android:gravity="center"
+      android:text="@string/my_match"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"/>
+
     <androidx.recyclerview.widget.RecyclerView
-      android:paddingTop="8dp"
-      android:clipToPadding="false"
       android:id="@+id/matchRecyclerView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:paddingTop="100dp"
+      android:clipToPadding="false"
       tools:listitem="@layout/card_my_events"/>
 
     <TextView
