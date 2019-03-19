@@ -1,7 +1,6 @@
 package com.deucate.pubgvictory.home
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
@@ -28,31 +27,21 @@ class HomeFragment : Fragment() {
     private val searchData = ArrayList<Room>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        rootView.roomRecyclerView.layoutManager = LinearLayoutManager(activity)
         rootView.homeSearchExtendedRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        val roomAdapter = RoomAdapter(viewModel.rooms.value)
-        roomAdapter.listener = object : RoomAdapter.RoomCardClickListener {
-            override fun onClickCard(room: Room) {
-                val intent = Intent(activity, RoomActivity::class.java)
-                intent.putExtra(Constatns.rooms, room)
-                startActivity(intent)
-            }
-        }
         val searchAdapter = SearchAdapter(searchData)
+        val roomAdapter = HomeViewPagerAdapter(viewModel.rooms.value, fragmentManager!!)
 
-        rootView.roomRecyclerView.adapter = roomAdapter
         rootView.homeSearchExtendedRecyclerView.adapter = searchAdapter
+        rootView.roomViewPager.adapter = roomAdapter
 
         viewModel.rooms.observe(this, Observer {
             roomAdapter.notifyDataSetChanged()
-
         })
 
         val searchEditText = rootView.searchEditText

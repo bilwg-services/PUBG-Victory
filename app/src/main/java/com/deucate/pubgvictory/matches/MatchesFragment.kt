@@ -24,9 +24,7 @@ class MatchesFragment : Fragment() {
     private val events = ArrayList<Event>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_matches, container, false)
         rootView.matchRecyclerView.layoutManager = LinearLayoutManager(context)

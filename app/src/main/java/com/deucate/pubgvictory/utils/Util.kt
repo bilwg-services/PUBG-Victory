@@ -45,9 +45,5 @@ class Util(val context: Context? = null) {
         }
     }
 
-    interface OnCallBack {
-        fun onAlertDialogPositiveAction(id: Int, dialog: DialogInterface?, which: Int)
-        fun onAlertDialogNegativeAction(id: Int, dialog: DialogInterface?, which: Int)
-    }
 
 }

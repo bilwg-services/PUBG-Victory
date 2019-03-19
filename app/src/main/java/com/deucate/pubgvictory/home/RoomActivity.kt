@@ -39,56 +39,56 @@ class RoomActivity : AppCompatActivity() {
         val room = intent.getSerializableExtra(Constatns.rooms) as Room
         initViews(room)
 
-        roomParticipateButton.setOnClickListener {
-            // callInstamojoPay("patelkartik1910@gmail.com","6352122123","200","test","kartik patel")
-
-            val view = LayoutInflater.from(this).inflate(R.layout.sheet_get_detail, null, false)
-            val bottomDialog = BottomSheetDialog(this)
-
-            view.nextButton.setOnClickListener {
-                val name = view.detailNameET
-                val id = view.pubgIDET
-
-                if (TextUtils.isEmpty(name.text.toString())) {
-                    name.error = "Please enter name."
-                }
-                if (TextUtils.isEmpty(id.text.toString())) {
-                    id.error = "Please enter id."
-                }
-
-                users.add(
-                    User(
-                        ID = id.text.toString(),
-                        Name = name.text.toString(),
-                        Phone = null,
-                        Email = null
-                    )
-                )
-
-                name.text = SpannableStringBuilder.valueOf("")
-                id.text = SpannableStringBuilder.valueOf("")
-
-                if (users.size == room.Teams) {
-                    bottomDialog.dismiss()
-                    if (room.EntryFees >= 10) {
-                        callInstamojoPay(
-                            email = "test@gmail.com",
-                            phone = "6352122123",
-                            amount = room.EntryFees.toString(),
-                            purpose = room.GameID,
-                            buyerName = auth.uid!!
-                        )
-                    } else {
-                        onSuccess()
-                    }
-                } else {
-                    view.sheetDetailNumber.text = "User #${users.size + 1}"
-                }
-            }
-
-            bottomDialog.setContentView(view)
-            bottomDialog.show()
-        }
+//        roomParticipateButton.setOnClickListener {
+//            // callInstamojoPay("patelkartik1910@gmail.com","6352122123","200","test","kartik patel")
+//
+//            val view = LayoutInflater.from(this).inflate(R.layout.sheet_get_detail, null, false)
+//            val bottomDialog = BottomSheetDialog(this)
+//
+//            view.nextButton.setOnClickListener {
+//                val name = view.detailNameET
+//                val id = view.pubgIDET
+//
+//                if (TextUtils.isEmpty(name.text.toString())) {
+//                    name.error = "Please enter name."
+//                }
+//                if (TextUtils.isEmpty(id.text.toString())) {
+//                    id.error = "Please enter id."
+//                }
+//
+//                users.add(
+//                    User(
+//                        ID = id.text.toString(),
+//                        Name = name.text.toString(),
+//                        Phone = null,
+//                        Email = null
+//                    )
+//                )
+//
+//                name.text = SpannableStringBuilder.valueOf("")
+//                id.text = SpannableStringBuilder.valueOf("")
+//
+//                if (users.size == room.Teams) {
+//                    bottomDialog.dismiss()
+//                    if (room.EntryFees >= 10) {
+//                        callInstamojoPay(
+//                            email = "test@gmail.com",
+//                            phone = "6352122123",
+//                            amount = room.EntryFees.toString(),
+//                            purpose = room.GameID,
+//                            buyerName = auth.uid!!
+//                        )
+//                    } else {
+//                        onSuccess()
+//                    }
+//                } else {
+//                    view.sheetDetailNumber.text = "User #${users.size + 1}"
+//                }
+//            }
+//
+//            bottomDialog.setContentView(view)
+//            bottomDialog.show()
+//        }
     }
 
     @SuppressLint("SetTextI18n")
