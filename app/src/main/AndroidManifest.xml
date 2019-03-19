@@ -30,10 +30,10 @@
         <category android:name="android.intent.category.BROWSABLE"/>
 
         <data
-          android:host="example.com/link"
+          android:host="pubgvictory.page.link"
           android:scheme="http"/>
         <data
-          android:host="example.com/link"
+          android:host="pubgvictory.page.link"
           android:scheme="https"/>
       </intent-filter>
     </activity>
@@ -46,7 +46,6 @@
       </intent-filter>
     </activity>
     <activity android:name=".HomeActivity">
-      <nav-graph android:value="@navigation/navigation"/>
     </activity>
 
     <uses-library

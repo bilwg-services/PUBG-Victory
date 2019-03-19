@@ -6,6 +6,7 @@ import com.deucate.pubgvictory.model.Event
 import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.model.User
 import com.deucate.pubgvictory.utils.Constatns
+import com.deucate.pubgvictory.utils.Util
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,6 +15,7 @@ class MainViewModel : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    private val utils = Util()
 
     val error = MutableLiveData<String>()
 
@@ -42,7 +44,7 @@ class MainViewModel : ViewModel() {
                 if (it.exception == null) {
                     if (it.result != null || !it.result!!.isEmpty) {
                         for (room in it.result!!.documents) {
-                            rooms.add(getRoomFromDocument(room))
+                            rooms.add(utils.getRoomFromDocument(room))
                         }
                     } else {
                         error.value = "500 Internal server error."
@@ -76,7 +78,7 @@ class MainViewModel : ViewModel() {
                 if (it.exception == null) {
                     if (it.result != null || !it.result!!.isEmpty) {
                         for (myEvent in it.result!!.documents) {
-                            myEvents.add(getEventFromDocument(myEvent))
+                            myEvents.add(utils.getEventFromDocument(myEvent))
                         }
                     } else {
                         error.value = "500 Internal server error."
@@ -87,16 +89,7 @@ class MainViewModel : ViewModel() {
             }
     }
 
-    private fun getEventFromDocument(event: DocumentSnapshot): Event {
-        return Event(
-            id = event.id,
-            RoomRef = event.getDocumentReference("RoomRef")!!,
-            Time = event.getTimestamp("Time")!!,
-            Title = event.getString("Title") ?: "No title Found",
-            Price = event.getLong("Price") ?: 0,
-            TeamRef = event.getDocumentReference("TeamRef")!!
-        )
-    }
+
 
     fun searchRoom(name: String, callback: (ArrayList<Room>?) -> Unit) {
         db.collection("Rooms").orderBy("Title").startAt(name).endAt(name + '\uf8ff').get()
@@ -104,31 +97,13 @@ class MainViewModel : ViewModel() {
                 if (it.isSuccessful) {
                     val searchResult = ArrayList<Room>()
                     for (doc in it.result!!.documents) {
-                        searchResult.add(getRoomFromDocument(doc))
+                        searchResult.add(utils.getRoomFromDocument(doc))
                     }
                     callback(searchResult)
                 } else {
                     callback(null)
                 }
             }
-    }
-
-    fun getRoomFromDocument(document: DocumentSnapshot): Room {
-        return Room(
-            GameID = document.id,
-            Title = document.getString("Title")!!,
-            GameDescription = document.getString("GameDescription")!!,
-            Teams = document.getLong("Teams")!!.toInt(),
-            Time = document.getLong("Time")!!,
-            Image = document.getString("Image")!!,
-            Map = document.getLong("Map")!!.toInt(),
-            AuthorName = document.getString("AuthorName")!!,
-            AuthorID = document.getString("AuthorID")!!,
-            Price = document.getLong("Price")!!,
-            EntryFees = document.getLong("EntryFees")!!,
-            AuthorImage = document.getString("AuthorImage"),
-            RoomID = document.getString("RoomID")
-        )
     }
 
     private fun <T> MutableLiveData<ArrayList<T>>.add(item: T) {

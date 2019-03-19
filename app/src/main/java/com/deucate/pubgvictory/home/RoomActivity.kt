@@ -14,6 +14,7 @@ import android.content.IntentFilter
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import com.deucate.pubgvictory.model.Room
 import com.deucate.pubgvictory.model.User
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -35,7 +36,7 @@ class RoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
 
-        util = Util(this)
+        util = Util()
        // val room = intent.getSerializableExtra(Constatns.rooms) as Room
        // initViews(room)
 
@@ -111,7 +112,7 @@ class RoomActivity : AppCompatActivity() {
 
 
     private fun onSuccess() {
-        util.showAlertDialog("Error", "Success")
+        AlertDialog.Builder(this).setTitle("Error").setMessage("Success").show()
     }
 
 }

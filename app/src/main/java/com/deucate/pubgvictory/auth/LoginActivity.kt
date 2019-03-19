@@ -1,5 +1,6 @@
 package com.deucate.pubgvictory.auth
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -30,8 +31,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val signIn = 69
 
-    private val util = Util(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (auth.currentUser != null) {
@@ -40,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         googleSignInClient = GoogleSignIn.getClient(
-                this, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            this, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
@@ -57,12 +56,15 @@ class LoginActivity : AppCompatActivity() {
         when (requestCode) {
             signIn -> {
                 try {
-                    val account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)
+                    val account = GoogleSignIn.getSignedInAccountFromIntent(data)
+                        .getResult(ApiException::class.java)
                     signInToFirebase(account!!)
                 } catch (e: ApiException) {
-                    util.showAlertDialog("Error", e.localizedMessage)
+                    AlertDialog.Builder(this).setTitle("Error").setMessage(e.localizedMessage)
+                        .show()
                 } catch (e: NullPointerException) {
-                    util.showAlertDialog("Error", e.localizedMessage)
+                    AlertDialog.Builder(this).setTitle("Error").setMessage(e.localizedMessage)
+                        .show()
                 }
             }
         }
@@ -72,14 +74,16 @@ class LoginActivity : AppCompatActivity() {
 
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        auth = FirebaseAuth.getInstance()
-                        checkExistingUser(auth.uid!!)
-                    } else {
-                        util.showAlertDialog("Error", task.exception!!.localizedMessage)
-                    }
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    auth = FirebaseAuth.getInstance()
+                    checkExistingUser(auth.uid!!)
+                } else {
+                    AlertDialog.Builder(this).setTitle("Error")
+                        .setMessage(task.exception!!.localizedMessage)
+                        .show()
                 }
+            }
     }
 
     private fun checkExistingUser(uid: String) {
@@ -97,8 +101,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun newUser(uid: String) {
-
         val layout = LayoutInflater.from(this).inflate(R.layout.alert_new_user, null)
 
         val name = auth.currentUser!!.displayName!!
@@ -117,39 +121,40 @@ class LoginActivity : AppCompatActivity() {
             layout.newUserPhone.isEnabled = false
         }
 
-        AlertDialog.Builder(this).setView(layout).setTitle("Welcome!!!").setPositiveButton("Next") { _, _ ->
+        AlertDialog.Builder(this).setView(layout).setTitle("Welcome!!!")
+            .setPositiveButton("Next") { _, _ ->
 
-            val userName = layout.newUserName.text.toString()
-            val phone = layout.newUserPhone.text.toString()
-            val emailAddress = layout.newUserEmail.text.toString()
+                val userName = layout.newUserName.text.toString()
+                val phone = layout.newUserPhone.text.toString()
+                val emailAddress = layout.newUserEmail.text.toString()
 
-            if (userName.isEmpty()) {
-                layout.newUserName.error = "Please enter name."
-                return@setPositiveButton
-            }
-            if (phone.isEmpty()) {
-                layout.newUserPhone.error = "Please enter phone number."
-                return@setPositiveButton
-            }
-            if (emailAddress.isEmpty()) {
-                layout.newUserEmail.error = "Please enter email address."
-                return@setPositiveButton
-            }
-
-            val data = HashMap<String, Any>()
-            data["Name"] = userName
-            data["Email"] = emailAddress
-            data["Phone"] = phone
-
-
-            db.collection(Constatns.users).document(uid).set(data).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    startHomeActivity()
-                } else {
-                    util.showAlertDialog("Error", it.exception!!.localizedMessage)
+                if (userName.isEmpty()) {
+                    layout.newUserName.error = "Please enter name."
+                    return@setPositiveButton
                 }
-            }
-        }.show()
+                if (phone.isEmpty()) {
+                    layout.newUserPhone.error = "Please enter phone number."
+                    return@setPositiveButton
+                }
+                if (emailAddress.isEmpty()) {
+                    layout.newUserEmail.error = "Please enter email address."
+                    return@setPositiveButton
+                }
+
+                val data = HashMap<String, Any>()
+                data["Name"] = userName
+                data["Email"] = emailAddress
+                data["Phone"] = phone
+
+
+                db.collection(Constatns.users).document(uid).set(data).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        startHomeActivity()
+                    } else {
+                        AlertDialog.Builder(this).setTitle("Error").setMessage(it.exception!!.localizedMessage).show()
+                    }
+                }
+            }.show()
     }
 
     private fun startHomeActivity() {

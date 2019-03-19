@@ -3,10 +3,9 @@ package com.deucate.pubgvictory
 import android.os.Bundle
 import android.app.Activity
 import android.content.IntentFilter
-import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import com.deucate.pubgvictory.model.Room
+import com.deucate.pubgvictory.utils.Util
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import instamojo.library.InstamojoPay
 import instamojo.library.InstapayListener
@@ -15,6 +14,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class ParticipateActivity : Activity() {
+    private val utils = Util()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +26,21 @@ class ParticipateActivity : Activity() {
         } else {
             FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener { data ->
                 if (data != null) {
-                    Log.d("----->",data.toString())
-                    val deepLink = data.link.getQueryParameter("id")
-                    Log.d("----->", deepLink)
-                    Toast.makeText(this, data.link.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, data.link.getQueryParameter("id"), Toast.LENGTH_SHORT)
+                        .show()
+                    utils.getRoomFromID(data.link.getQueryParameter("id") ?: "") { room, error ->
+                        if (error == null) {
+                            if (room != null) {
+                                Toast.makeText(this, room.toString(), Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Event not found.", Toast.LENGTH_LONG).show()
+                                finish()
+                            }
+                        } else {
+                            Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+                            finish()
+                        }
+                    }
                 } else {
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
                 }

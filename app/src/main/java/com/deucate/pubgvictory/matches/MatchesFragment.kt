@@ -14,11 +14,13 @@ import com.deucate.pubgvictory.MainViewModel
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.model.Event
 import com.deucate.pubgvictory.model.Room
+import com.deucate.pubgvictory.utils.Util
 import kotlinx.android.synthetic.main.fragment_matches.view.*
 
 class MatchesFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
+    private val utils: Util = Util()
 
     private lateinit var adapter: MatchAdapter
     private val events = ArrayList<Event>()
@@ -72,7 +74,7 @@ class MatchesFragment : Fragment() {
             if (it.isSuccessful) {
                 val result = it.result
                 if (result != null && result.exists()) {
-                    callBack(viewModel.getRoomFromDocument(result), null)
+                    callBack(utils.getRoomFromDocument(result), null)
                 }
             } else {
                 callBack.invoke(null, it.exception!!.localizedMessage)
