@@ -81,19 +81,18 @@ class ParticipateActivity : Activity() {
         participateTitle.text = room.Title
         participateButton.setOnClickListener {
             val uid = participateEditText!!.text.toString()
-            if (room.Teams >= users.size) {
+            if (room.Teams <= users.size) {
                 callInstamojoPay(
-                        email = auth.currentUser?.email ?: users[0].Email ?: "Email not found",
-                        phone = auth.currentUser?.phoneNumber ?: users[0].Phone
-                        ?: "Phone number not found",
+                        email = users[0].Email ?: auth.currentUser?.email ?: "Email not found",
+                        phone = users[0].Phone ?: "Phone number not found",
                         amount = room.Price.toString(),
                         purpose = currentUser.uid,
-                        buyerName = auth.currentUser?.displayName ?: users[0].Name
+                        buyerName = users[0].Name
                 )
                 return@setOnClickListener
             }
             getUserFromUID(uid) { error, user ->
-                if (error != null) {
+                if (error == null) {
                     if (user != null) {
                         addUser(user)
                     } else {
@@ -145,7 +144,7 @@ class ParticipateActivity : Activity() {
     }
 
     private fun callInstamojoPay(email: String, phone: String, amount: String, purpose: String, buyerName: String) {
-        Log.d("\nUser: \n", "Email = $email \n Phone = $phone \n amount = $amount \n purpose = $purpose \n buyer name = $buyerName")
+        Log.d("User:", "Email = $email \n Phone = $phone \n amount = $amount \n purpose = $purpose \n buyer name = $buyerName")
         val activity = this
         val instamojoPay = InstamojoPay()
         val filter = IntentFilter("ai.devsupport.instamojo")
