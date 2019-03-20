@@ -33,4 +33,6 @@
   <string name="no_notification_found">No notification found.</string>
   <string name="my_match">My Match</string>
   <string name="title_activity_participate">ParticipateActivity</string>
+  <string name="add">Add</string>
+  <string name="user_id">User ID</string>
 </resources>

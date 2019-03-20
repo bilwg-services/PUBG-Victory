@@ -22,7 +22,7 @@
     tools:ignore="AllowBackup,GoogleAppIndexingWarning">
     <activity
       android:label="@string/title_activity_participate"
-      android:name=".ParticipateActivity">
+      android:name=".participate.ParticipateActivity">
       <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>
 
@@ -51,8 +51,6 @@
     <uses-library
       android:name="org.apache.http.legacy"
       android:required="false"/>
-
-    <activity android:name=".home.RoomActivity"/>
 
     <meta-data
       android:name="instamojo.orderauth.url"

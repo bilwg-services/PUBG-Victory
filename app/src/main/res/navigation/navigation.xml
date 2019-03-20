@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_matches" />
     <activity
       android:id="@+id/participateActivity"
-      android:name="com.deucate.pubgvictory.ParticipateActivity"
+      android:name="com.deucate.pubgvictory.participate.ParticipateActivity"
       android:label="activity_participate"
       tools:layout="@layout/activity_participate">
         <argument
