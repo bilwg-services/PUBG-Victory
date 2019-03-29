@@ -10,7 +10,14 @@ import kotlinx.android.synthetic.main.card_participate_user.view.*
 
 class UserAdapter(private val users: ArrayList<User>) : RecyclerView.Adapter<UserViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder = UserViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_participate_user, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
+        UserViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.card_participate_user,
+                parent,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = users.size
 

@@ -81,7 +81,7 @@ class ParticipateActivity : Activity() {
         participateTitle.text = room.Title
         participateButton.setOnClickListener {
             val uid = participateEditText!!.text.toString()
-            if (room.Teams <= users.size) {
+            if (room.Teams < users.size) {
                 callInstamojoPay(
                         email = users[0].Email ?: auth.currentUser?.email ?: "Email not found",
                         phone = users[0].Phone ?: "Phone number not found",

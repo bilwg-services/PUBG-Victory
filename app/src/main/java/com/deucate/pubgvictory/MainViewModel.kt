@@ -29,8 +29,8 @@ class MainViewModel : ViewModel() {
         user.value = User(
             ID = auth.uid!!,
             Name = auth.currentUser!!.displayName!!,
-            Phone = auth.currentUser!!.phoneNumber!!,
-            Email = auth.currentUser!!.email!!
+            Phone = auth.currentUser!!.phoneNumber ?: "Phone number not found.",
+            Email = auth.currentUser!!.email ?: "Email number not found."
         )
 
         loadUser()
