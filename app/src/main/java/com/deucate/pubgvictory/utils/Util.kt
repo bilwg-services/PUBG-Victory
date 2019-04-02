@@ -69,7 +69,8 @@ class Util {
                 Price = document.getLong("Price")!!,
                 EntryFees = document.getLong("EntryFees")!!,
                 AuthorImage = document.getString("AuthorImage"),
-                RoomID = document.getString("RoomID")
+                RoomID = document.getString("RoomID"),
+                Password = document.getString("Password")
         )
     }
 

@@ -35,4 +35,7 @@
   <string name="title_activity_participate">ParticipateActivity</string>
   <string name="add">Add</string>
   <string name="user_id">User ID</string>
+  <string name="password">Password</string>
+  <string name="room_id">Room ID</string>
+  <string name="loading">loading</string>
 </resources>

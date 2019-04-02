@@ -15,5 +15,6 @@ data class Room(
     val AuthorImage: String?,
     val Price: Long,
     val EntryFees: Long,
-    val RoomID: String?
+    val RoomID: String?,
+    val Password: String?
 ) : Serializable
