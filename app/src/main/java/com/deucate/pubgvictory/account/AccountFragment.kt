@@ -15,6 +15,7 @@ import com.deucate.pubgvictory.MainViewModel
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.auth.LoginActivity
 import com.deucate.pubgvictory.model.User
+import com.deucate.pubgvictory.settings.SettingsActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_account.view.*
 import net.glxn.qrgen.android.QRCode
@@ -41,7 +42,7 @@ class AccountFragment : Fragment() {
         rootView.authUID.text = user.ID
 
         rootView.accountAdditionalSettings.setOnClickListener {
-            Toast.makeText(activity!!, "Start additional activity", Toast.LENGTH_SHORT).show()
+            activity?.startActivity(Intent(context,SettingsActivity::class.java))
         }
 
         rootView.logoutButton.setOnClickListener {
