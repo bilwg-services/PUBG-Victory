@@ -9,19 +9,30 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.deucate.pubgvictory.R
 import com.deucate.pubgvictory.model.Room
+import com.deucate.pubgvictory.model.User
 import kotlinx.android.synthetic.main.activity_participate.*
 
 
 class ParticipateActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ParticipateViewModel
-
+    private val users = ArrayList<User>()
     private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_participate)
         viewModel = ViewModelProviders.of(this).get(ParticipateViewModel::class.java)
+        users.add(
+            User(
+                ID = viewModel.auth.uid ?: "User id not found",
+                Name = viewModel.auth.currentUser?.displayName ?: "User id not found",
+                Phone = viewModel.auth.currentUser?.phoneNumber,
+                Email = viewModel.auth.currentUser?.email
+            )
+        )
+
+        adapter = UserAdapter(users)
 
         val recyclerView = participateRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -57,14 +68,14 @@ class ParticipateActivity : AppCompatActivity() {
         participateTitle.text = room.Title
         participateButton.setOnClickListener {
             val uid = participateEditText!!.text.toString()
-            if (room.Teams < /*users.size*/ 1) {
+            if (room.Teams <= /*users.size*/ 1) {
                 Toast.makeText(this, "Data added", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             viewModel.getUserFromUID(uid) { error, user ->
                 if (error == null) {
                     if (user != null) {
-                        //Todo add user
+                        users.add(user)
                     } else {
                         AlertDialog.Builder(this).setTitle("Error")
                             .setMessage("Something went wrong.").show()

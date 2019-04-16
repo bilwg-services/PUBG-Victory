@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ParticipateViewModel : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val util = Util()
 
     private val participants = MutableLiveData<ArrayList<User>>()
